@@ -13,9 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ApiGenuiRouteImport } from './routes/api/genui'
+import { Route as ApiTraceRouteImport } from './routes/api/trace'
 import { Route as JournalIndexRouteImport } from './routes/journal/index'
 import { Route as JournalDurableAgentsWithEffectRouteImport } from './routes/journal/durable-agents-with-effect'
 import { Route as JournalStreamingGenerativeUiOnTanstackStartRouteImport } from './routes/journal/streaming-generative-ui-on-tanstack-start'
+import { Route as JournalTracesNotVibesRouteImport } from './routes/journal/traces-not-vibes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,6 +39,11 @@ const ApiGenuiRoute = ApiGenuiRouteImport.update({
   path: '/api/genui',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTraceRoute = ApiTraceRouteImport.update({
+  id: '/api/trace',
+  path: '/api/trace',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalIndexRoute = JournalIndexRouteImport.update({
   id: '/journal/',
   path: '/journal/',
@@ -54,14 +61,21 @@ const JournalStreamingGenerativeUiOnTanstackStartRoute =
     path: '/journal/streaming-generative-ui-on-tanstack-start',
     getParentRoute: () => rootRouteImport,
   } as any)
+const JournalTracesNotVibesRoute = JournalTracesNotVibesRouteImport.update({
+  id: '/journal/traces-not-vibes',
+  path: '/journal/traces-not-vibes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/genui': typeof ApiGenuiRoute
+  '/api/trace': typeof ApiTraceRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
   '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
+  '/journal/traces-not-vibes': typeof JournalTracesNotVibesRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRoutesByTo {
@@ -69,8 +83,10 @@ export interface FileRoutesByTo {
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/genui': typeof ApiGenuiRoute
+  '/api/trace': typeof ApiTraceRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
   '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
+  '/journal/traces-not-vibes': typeof JournalTracesNotVibesRoute
   '/journal': typeof JournalIndexRoute
 }
 export interface FileRoutesById {
@@ -79,8 +95,10 @@ export interface FileRoutesById {
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/genui': typeof ApiGenuiRoute
+  '/api/trace': typeof ApiTraceRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
   '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
+  '/journal/traces-not-vibes': typeof JournalTracesNotVibesRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRouteTypes {
@@ -90,8 +108,10 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/api/genui'
+    | '/api/trace'
     | '/journal/durable-agents-with-effect'
     | '/journal/streaming-generative-ui-on-tanstack-start'
+    | '/journal/traces-not-vibes'
     | '/journal/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,8 +119,10 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/api/genui'
+    | '/api/trace'
     | '/journal/durable-agents-with-effect'
     | '/journal/streaming-generative-ui-on-tanstack-start'
+    | '/journal/traces-not-vibes'
     | '/journal'
   id:
     | '__root__'
@@ -108,8 +130,10 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/sitemap.xml'
     | '/api/genui'
+    | '/api/trace'
     | '/journal/durable-agents-with-effect'
     | '/journal/streaming-generative-ui-on-tanstack-start'
+    | '/journal/traces-not-vibes'
     | '/journal/'
   fileRoutesById: FileRoutesById
 }
@@ -118,8 +142,10 @@ export interface RootRouteChildren {
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiGenuiRoute: typeof ApiGenuiRoute
+  ApiTraceRoute: typeof ApiTraceRoute
   JournalDurableAgentsWithEffectRoute: typeof JournalDurableAgentsWithEffectRoute
   JournalStreamingGenerativeUiOnTanstackStartRoute: typeof JournalStreamingGenerativeUiOnTanstackStartRoute
+  JournalTracesNotVibesRoute: typeof JournalTracesNotVibesRoute
   JournalIndexRoute: typeof JournalIndexRoute
 }
 
@@ -153,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGenuiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/trace': {
+      id: '/api/trace'
+      path: '/api/trace'
+      fullPath: '/api/trace'
+      preLoaderRoute: typeof ApiTraceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal/': {
       id: '/journal/'
       path: '/journal'
@@ -174,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JournalStreamingGenerativeUiOnTanstackStartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal/traces-not-vibes': {
+      id: '/journal/traces-not-vibes'
+      path: '/journal/traces-not-vibes'
+      fullPath: '/journal/traces-not-vibes'
+      preLoaderRoute: typeof JournalTracesNotVibesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -182,9 +222,11 @@ const rootRouteChildren: RootRouteChildren = {
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiGenuiRoute: ApiGenuiRoute,
+  ApiTraceRoute: ApiTraceRoute,
   JournalDurableAgentsWithEffectRoute: JournalDurableAgentsWithEffectRoute,
   JournalStreamingGenerativeUiOnTanstackStartRoute:
     JournalStreamingGenerativeUiOnTanstackStartRoute,
+  JournalTracesNotVibesRoute: JournalTracesNotVibesRoute,
   JournalIndexRoute: JournalIndexRoute,
 }
 export const routeTree = rootRouteImport

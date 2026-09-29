@@ -1,0 +1,24 @@
+processors:
+  tail_sampling:
+    decision_wait: 10s
+    policies:
+      - name: errors
+        type: status_code
+        status_code: { status_codes: [ERROR] }
+      - name: slow
+        type: latency
+        latency: { threshold_ms: 4000 }
+      - name: over-budget
+        type: numeric_attribute
+        numeric_attribute:
+          key: gen_ai.usage.input_tokens
+          min_value: 8001
+      - name: ungrounded
+        type: ottl_condition
+        ottl_condition:
+          error_mode: ignore
+          span:
+            - attributes["gen_ai.evaluation.score.value"] < 0.5
+      - name: baseline
+        type: probabilistic
+        probabilistic: { sampling_percentage: 5 }

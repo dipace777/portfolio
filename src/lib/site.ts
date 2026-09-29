@@ -206,6 +206,9 @@ export const essays: ReadonlyArray<Essay> = [
     kicker:
       "Spans, token budgets and evals wired into the same telemetry as the rest of your stack.",
     tags: ["OpenTelemetry", "Evals"],
+    to: "/journal/traces-not-vibes",
+    published: "2026-09-30",
+    minutes: 13,
   },
   {
     no: "E.04",
