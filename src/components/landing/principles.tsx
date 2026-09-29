@@ -253,14 +253,19 @@ function TracePanel({ index }: { index: number }) {
             {p.spans.map((s, i) => (
               <div
                 key={i}
-                className="grid grid-cols-[8.5rem_1fr] items-center gap-3 sm:grid-cols-[10rem_1fr]"
+                className="grid grid-cols-[7.5rem_1fr] items-center gap-3 sm:grid-cols-[10rem_1fr]"
               >
                 <span
-                  className="truncate font-mono text-[11px] text-bone/60"
+                  className="min-w-0 font-mono text-[11px] text-bone/60"
                   style={{ paddingLeft: s.depth * 12 }}
                 >
-                  {s.depth > 0 && <span className="text-bone/20">└ </span>}
-                  {s.name}
+                  <span className="block truncate">
+                    {s.depth > 0 && <span className="text-bone/20">└ </span>}
+                    {s.name}
+                  </span>
+                  <span className="block truncate text-[9.5px] text-bone/35 sm:hidden">
+                    {s.meta}
+                  </span>
                 </span>
                 <div className="relative h-6 rounded bg-bone/[0.03]">
                   <motion.div
@@ -275,7 +280,7 @@ function TracePanel({ index }: { index: number }) {
                     }}
                   />
                   <motion.span
-                    className="absolute top-1/2 -translate-y-1/2 font-mono text-[9.5px] whitespace-nowrap text-bone/70"
+                    className="absolute top-1/2 hidden -translate-y-1/2 font-mono text-[9.5px] whitespace-nowrap text-bone/70 sm:block"
                     style={
                       s.depth === 0
                         ? { right: "1.5%" }
@@ -341,7 +346,7 @@ export function Principles() {
         aria-hidden
         className="pointer-events-none absolute top-1/3 right-0 size-[40rem] rounded-full bg-ember/10 blur-[140px]"
       />
-      <div className="relative mx-auto grid max-w-[1400px] gap-16 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+      <div className="relative mx-auto grid max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-20">
         <div>
           <div className="mb-8 flex items-center gap-4 font-mono text-[11px] tracking-[0.3em] text-bone/40 uppercase">
             <span className="h-px w-10 bg-bone/30" />
