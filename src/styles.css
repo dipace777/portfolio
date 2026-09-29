@@ -1,8 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/noto-sans";
-@import "@fontsource-variable/roboto";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -76,8 +78,15 @@
 }
 
 @theme inline {
-    --font-sans: 'Noto Sans Variable', sans-serif;
-    --font-heading: 'Roboto Variable', sans-serif;
+    --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Instrument Serif', ui-serif, Georgia, serif;
+    --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+    --color-ink: #060708;
+    --color-ember: #ff9a3c;
+    --color-ember-soft: #ffc27a;
+    --color-glacier: #5fd4e0;
+    --color-bone: #ede6da;
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -128,4 +137,68 @@
   html {
     @apply font-sans;
     }
+}
+
+html.dark {
+  --background: #060708;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-ember) 35%, transparent);
+  color: var(--color-bone);
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  30% { transform: translate(3%, -15%); }
+  50% { transform: translate(12%, 9%); }
+  70% { transform: translate(9%, 4%); }
+  90% { transform: translate(-1%, 7%); }
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes intro-failsafe {
+  to { visibility: hidden; opacity: 0; pointer-events: none; }
+}
+
+.film-grain {
+  animation: grain 0.9s steps(6) infinite;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+.animate-flicker {
+  animation: flicker 1.4s ease-in-out infinite;
+}
+
+.intro-failsafe {
+  animation: intro-failsafe 0.3s 5s forwards;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px color-mix(in oklab, var(--color-bone) 35%, transparent);
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-grain,
+  .animate-marquee,
+  .animate-flicker {
+    animation: none;
+  }
 }

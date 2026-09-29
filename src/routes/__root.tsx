@@ -15,14 +15,26 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "TanStack Start Starter",
+        title: "Dipesh Chaulagain — AI-Native Fullstack Developer",
       },
+      {
+        name: "description",
+        content:
+          "Dipesh Chaulagain builds resilient, observable and scalable agentic systems. Interactive essays on building AI-native software with React, Effect TS, AI SDK and TanStack Start.",
+      },
+      { name: "theme-color", content: "#060708" },
+      {
+        property: "og:title",
+        content: "Dipesh Chaulagain — AI-Native Fullstack Developer",
+      },
+      { property: "og:image", content: "/images/hero-network.jpg" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preload", as: "image", href: "/images/hero-network.jpg" },
     ],
   }),
   notFoundComponent: () => (
@@ -36,7 +48,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
