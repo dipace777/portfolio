@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { motion } from "motion/react"
+import { Link } from "@tanstack/react-router"
 
 const links = [
-  { href: "#principles", label: "Principles" },
-  { href: "#reel", label: "Reel" },
-  { href: "#stack", label: "Stack" },
-  { href: "#journal", label: "Journal" },
+  { hash: "principles", label: "Principles" },
+  { hash: "reel", label: "Reel" },
+  { hash: "stack", label: "Stack" },
+  { hash: "journal", label: "Journal" },
 ]
 
 function Timecode() {
@@ -35,7 +36,13 @@ function Timecode() {
   )
 }
 
-export function Nav({ ready }: { ready: boolean }) {
+export function Nav({
+  ready = true,
+  home = true,
+}: {
+  ready?: boolean
+  home?: boolean
+}) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -55,7 +62,11 @@ export function Nav({ ready }: { ready: boolean }) {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 md:px-10">
-        <a href="#top" className="group flex items-center gap-3">
+        <Link
+          to="/"
+          hash={home ? "top" : undefined}
+          className="group flex items-center gap-3"
+        >
           <span className="relative flex size-8 items-center justify-center rounded-full border border-bone/20 font-display text-lg text-bone italic transition-colors group-hover:border-ember/60">
             d
             <span className="absolute -right-0.5 -bottom-0.5 size-2 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)]" />
@@ -63,17 +74,18 @@ export function Nav({ ready }: { ready: boolean }) {
           <span className="hidden font-mono text-[11px] tracking-[0.25em] text-bone/70 uppercase sm:block">
             Dipesh Chaulagain
           </span>
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
+            <li key={l.hash}>
+              <Link
+                to={l.hash === "journal" && !home ? "/journal" : "/"}
+                hash={l.hash === "journal" && !home ? undefined : l.hash}
                 className="font-mono text-[11px] tracking-[0.25em] text-bone/50 uppercase transition-colors hover:text-bone"
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

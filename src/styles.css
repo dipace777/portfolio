@@ -197,6 +197,15 @@ html.dark {
   }
 }
 
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @keyframes intro-failsafe {
   to {
     visibility: hidden;
@@ -226,6 +235,99 @@ html.dark {
   -webkit-text-stroke: 1px
     color-mix(in oklab, var(--color-bone) 35%, transparent);
   color: transparent;
+}
+
+.code-block {
+  --sh-class: #ffc27a;
+  --sh-identifier: #ede6da;
+  --sh-sign: #8d877f;
+  --sh-property: #7fdde7;
+  --sh-entity: #7fdde7;
+  --sh-jsxliterals: #ede6da;
+  --sh-string: #b9d99a;
+  --sh-keyword: #ff9a3c;
+  --sh-comment: #6f6a63;
+}
+
+.code-block .sh__token--comment {
+  font-style: italic;
+}
+
+@layer components {
+  .article-prose {
+    color: color-mix(in oklab, var(--color-bone) 78%, transparent);
+    font-size: 1.125rem;
+    line-height: 1.8;
+  }
+
+  .article-prose > section > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .article-prose strong {
+    color: var(--color-bone);
+    font-weight: 500;
+  }
+
+  .article-prose em {
+    font-family: var(--font-display);
+    font-size: 1.12em;
+    color: var(--color-ember-soft);
+  }
+
+  .article-prose :is(p, li) a {
+    color: var(--color-bone);
+    text-decoration: underline;
+    text-decoration-color: color-mix(
+      in oklab,
+      var(--color-ember) 60%,
+      transparent
+    );
+    text-underline-offset: 4px;
+  }
+
+  .article-prose :is(p, li) a:hover {
+    text-decoration-color: var(--color-ember);
+  }
+
+  .article-prose :not(pre) > code {
+    border-radius: 0.3rem;
+    background: color-mix(in oklab, var(--color-bone) 8%, transparent);
+    padding: 0.1em 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    color: var(--color-bone);
+  }
+
+  .article-prose > section > :is(ul, ol) {
+    display: grid;
+    gap: 0.6rem;
+    padding-left: 1.25rem;
+  }
+
+  .article-prose > section > ul > li {
+    position: relative;
+  }
+
+  .article-prose > section > ul > li::before {
+    content: "";
+    position: absolute;
+    top: 0.9em;
+    left: -1.1rem;
+    height: 1px;
+    width: 0.6rem;
+    background: var(--color-ember);
+  }
+
+  .article-prose > section > ol {
+    list-style: decimal;
+  }
+
+  .article-prose > section > ol > li::marker {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-ember);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

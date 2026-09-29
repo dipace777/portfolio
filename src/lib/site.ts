@@ -1,3 +1,5 @@
+import type { LinkProps } from "@tanstack/react-router"
+
 export const site = {
   name: "Dipesh Chaulagain",
   role: "AI-Native Fullstack Developer",
@@ -167,13 +169,26 @@ export const stackGroups = [
   { label: "Intelligence", items: ["AI SDK", "Effect TS", "Agents & tools"] },
 ] as const
 
-export const essays = [
+type Essay = {
+  no: string
+  title: string
+  kicker: string
+  tags: ReadonlyArray<string>
+  to?: LinkProps["to"]
+  published?: string
+  minutes?: number
+}
+
+export const essays: ReadonlyArray<Essay> = [
   {
     no: "E.01",
     title: "Durable agents with Effect TS",
     kicker:
-      "Retries, timeouts and typed failures for LLM tool calls that never silently die.",
-    tags: ["Effect", "Agents"],
+      "Typed failures, retries, timeouts, fallbacks and crash-proof steps for agents that never silently die.",
+    tags: ["Effect v4", "Agents"],
+    to: "/journal/durable-agents-with-effect",
+    published: "2026-09-30",
+    minutes: 14,
   },
   {
     no: "E.02",
@@ -196,4 +211,18 @@ export const essays = [
       "Supervision trees as a mental model for fault-tolerant, multi-agent systems.",
     tags: ["Elixir", "Architecture"],
   },
-] as const
+]
+
+export const essayAt = (to: LinkProps["to"]) => {
+  const essay = essays.find((e) => e.to === to)
+  if (!essay) throw new Error(`Unknown essay: ${to}`)
+  return essay
+}
+
+export const formatDate = (iso: string) =>
+  new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  })

@@ -15,6 +15,12 @@ export default [
     },
   },
   {
+    files: ["src/lib/durable/**", "src/content/**"],
+    rules: {
+      "@typescript-eslint/naming-convention": "off",
+    },
+  },
+  {
     ignores: ["eslint.config.js", ".prettierrc"],
   },
 ]

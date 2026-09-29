@@ -10,8 +10,26 @@ import { Nav } from "@/components/landing/nav"
 import { Principles } from "@/components/landing/principles"
 import { Reel } from "@/components/landing/reel"
 import { Stack } from "@/components/landing/stack"
+import { pageHead } from "@/lib/seo"
+import { site } from "@/lib/site"
 
-export const Route = createFileRoute("/")({ component: App })
+export const Route = createFileRoute("/")({
+  head: () => {
+    const head = pageHead({
+      title: `${site.name} — ${site.role}`,
+      description: site.description,
+      path: "/",
+    })
+    return {
+      ...head,
+      links: [
+        ...head.links,
+        { rel: "preload", as: "image", href: "/images/hero-network.webp" },
+      ],
+    }
+  },
+  component: App,
+})
 
 function App() {
   const [ready, setReady] = useState(false)

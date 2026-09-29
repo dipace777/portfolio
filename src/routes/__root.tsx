@@ -17,11 +17,9 @@ export const Route = createRootRoute({
         { name: "description", content: site.description },
         { name: "author", content: site.name },
         { name: "theme-color", content: "#060708" },
-        { property: "og:type", content: "website" },
         { property: "og:site_name", content: site.name },
         { property: "og:title", content: title },
         { property: "og:description", content: site.description },
-        { property: "og:url", content: site.url },
         { property: "og:image", content: image },
         { property: "og:image:width", content: "1200" },
         { property: "og:image:height", content: "630" },
@@ -35,7 +33,6 @@ export const Route = createRootRoute({
       ],
       links: [
         { rel: "stylesheet", href: appCss },
-        { rel: "canonical", href: site.url },
         { rel: "icon", href: "/favicon.ico", sizes: "any" },
         {
           rel: "icon",
@@ -45,7 +42,12 @@ export const Route = createRootRoute({
         },
         { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
         { rel: "manifest", href: "/manifest.json" },
-        { rel: "preload", as: "image", href: "/images/hero-network.webp" },
+        {
+          rel: "alternate",
+          type: "application/rss+xml",
+          title: `${site.name} — Journal`,
+          href: "/rss.xml",
+        },
       ],
     }
   },

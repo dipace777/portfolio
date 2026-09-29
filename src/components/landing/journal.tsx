@@ -1,7 +1,9 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "motion/react"
+import { Link } from "@tanstack/react-router"
 import { ArrowUpRight } from "lucide-react"
 import { essays } from "@/lib/site"
+import { EssayRow } from "@/components/journal/essay-row"
 
 export function Journal() {
   const ref = useRef<HTMLElement>(null)
@@ -68,52 +70,21 @@ export function Journal() {
 
       <div className="mx-auto max-w-[1400px] px-6 pb-32 md:px-10 md:pb-44">
         <div className="flex items-center justify-between border-b border-bone/10 pb-4 font-mono text-[10px] tracking-[0.3em] text-bone/40 uppercase">
-          <span>Now in production</span>
+          <span>Latest</span>
           <span>{essays.length} essays</span>
         </div>
         <ul>
           {essays.map((e, i) => (
-            <motion.li
-              key={e.no}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{
-                duration: 0.9,
-                delay: i * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="group relative border-b border-bone/10"
-            >
-              <div className="absolute inset-0 origin-bottom scale-y-0 bg-gradient-to-r from-ember/[0.08] to-transparent transition-transform duration-500 ease-out group-hover:scale-y-100" />
-              <div className="relative grid cursor-default grid-cols-[3.5rem_1fr_auto] items-center gap-4 py-8 md:grid-cols-[6rem_1fr_14rem_auto] md:gap-8 md:py-10">
-                <span className="font-mono text-xs text-bone/35">{e.no}</span>
-                <div>
-                  <h3 className="font-display text-2xl leading-tight text-bone transition-transform duration-500 group-hover:translate-x-2 md:text-4xl">
-                    {e.title}
-                  </h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-bone/45 md:text-base">
-                    {e.kicker}
-                  </p>
-                </div>
-                <div className="hidden flex-wrap gap-2 md:flex">
-                  {e.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-bone/15 px-3 py-1 font-mono text-[10px] tracking-wider text-bone/60 uppercase"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-bone/40 uppercase">
-                  <span className="hidden sm:inline">Soon</span>
-                  <ArrowUpRight className="size-5 text-bone/40 transition-all duration-500 group-hover:rotate-45 group-hover:text-ember" />
-                </span>
-              </div>
-            </motion.li>
+            <EssayRow key={e.no} essay={e} index={i} />
           ))}
         </ul>
+        <Link
+          to="/journal"
+          className="group mt-10 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] text-bone/55 uppercase transition-colors hover:text-bone"
+        >
+          Enter the journal
+          <ArrowUpRight className="size-4 transition-transform group-hover:rotate-45" />
+        </Link>
       </div>
     </section>
   )
