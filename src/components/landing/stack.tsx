@@ -1,14 +1,16 @@
 import { motion } from "motion/react"
-import { stack, stackGroups } from "@/lib/site"
+import { infraStack, stack, stackGroups } from "@/lib/site"
 
 function Marquee({
+  names,
   reverse,
   duration,
 }: {
+  names: ReadonlyArray<string>
   reverse?: boolean
   duration: string
 }) {
-  const items = [...stack, ...stack]
+  const items = [...names, ...names]
   return (
     <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
       <div
@@ -55,11 +57,11 @@ export function Stack() {
       </div>
 
       <div className="space-y-4">
-        <Marquee duration="55s" />
-        <Marquee duration="70s" reverse />
+        <Marquee names={stack} duration="55s" />
+        <Marquee names={infraStack} duration="45s" reverse />
       </div>
 
-      <div className="mx-6 mx-auto mt-24 grid max-w-[1400px] grid-cols-2 gap-px overflow-hidden rounded-2xl border border-bone/10 bg-bone/10 md:mx-10 md:grid-cols-4 xl:mx-auto">
+      <div className="mx-6 mt-24 grid max-w-[1400px] grid-cols-2 gap-px overflow-hidden rounded-2xl border border-bone/10 bg-bone/10 md:mx-10 md:grid-cols-3 xl:mx-auto">
         {stackGroups.map((g, i) => (
           <motion.div
             key={g.label}

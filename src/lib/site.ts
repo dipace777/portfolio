@@ -133,7 +133,19 @@ export const stack = [
   "Node",
   "Bun",
   "Golang",
+  "Python",
   "Elixir",
+] as const
+
+export const infraStack = [
+  "PostgreSQL",
+  "AWS",
+  "MongoDB",
+  "GCP",
+  "Redis",
+  "Docker",
+  "ArangoDB",
+  "Kubernetes",
 ] as const
 
 export const stackGroups = [
@@ -141,8 +153,13 @@ export const stackGroups = [
     label: "Interface",
     items: ["React", "Next.js", "TanStack Start", "React Native"],
   },
-  { label: "Languages", items: ["TypeScript", "Golang", "Elixir"] },
+  { label: "Languages", items: ["TypeScript", "Golang", "Python", "Elixir"] },
   { label: "Runtime", items: ["Node", "Bun", "BEAM"] },
+  {
+    label: "Data",
+    items: ["PostgreSQL", "MongoDB", "ArangoDB", "Redis"],
+  },
+  { label: "Cloud", items: ["AWS", "GCP", "Docker", "Kubernetes"] },
   { label: "Intelligence", items: ["AI SDK", "Effect TS", "Agents & tools"] },
 ] as const
 
