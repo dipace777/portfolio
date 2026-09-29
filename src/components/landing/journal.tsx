@@ -19,7 +19,7 @@ export function Journal() {
     >
       <div className="relative h-[85svh] min-h-[560px] overflow-hidden">
         <motion.img
-          src="/images/monolith.jpg"
+          src="/images/monolith.webp"
           alt=""
           loading="lazy"
           style={{ y: imageY }}

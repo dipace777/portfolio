@@ -146,6 +146,11 @@ html.dark {
   scrollbar-gutter: stable;
 }
 
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 3px;
+}
+
 ::selection {
   background: color-mix(in oklab, var(--color-ember) 35%, transparent);
   color: var(--color-bone);

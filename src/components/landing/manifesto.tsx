@@ -47,14 +47,17 @@ export function Manifesto() {
           ref={ref}
           className="max-w-6xl text-[clamp(2rem,4.6vw,4.4rem)] leading-[1.12] font-light tracking-[-0.02em] text-bone"
         >
-          {words.map((w, i) => (
-            <Word
-              key={i}
-              word={w}
-              progress={scrollYProgress}
-              range={[i / words.length, (i + 1) / words.length]}
-            />
-          ))}
+          <span className="sr-only">{text.replaceAll("*", "")}</span>
+          <span aria-hidden>
+            {words.map((w, i) => (
+              <Word
+                key={i}
+                word={w}
+                progress={scrollYProgress}
+                range={[i / words.length, (i + 1) / words.length]}
+              />
+            ))}
+          </span>
         </p>
       </div>
     </section>

@@ -80,8 +80,9 @@ export function Hero({ ready }: { ready: boolean }) {
         className="absolute inset-0 -z-20"
       >
         <motion.img
-          src="/images/hero-network.jpg"
+          src="/images/hero-network.webp"
           alt=""
+          fetchPriority="high"
           className="size-full object-cover object-[70%_50%]"
           initial={{ scale: 1.25, opacity: 0, filter: "blur(12px)" }}
           animate={

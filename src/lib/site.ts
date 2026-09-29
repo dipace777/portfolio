@@ -1,6 +1,10 @@
 export const site = {
   name: "Dipesh Chaulagain",
   role: "AI-Native Fullstack Developer",
+  url: "https://chaulagaindipesh.com.np",
+  description:
+    "Dipesh Chaulagain builds resilient, observable and scalable agentic systems. Interactive essays on building AI-native software with React, Effect TS, AI SDK and TanStack Start.",
+  twitter: "@DipAce77",
   email: "codeict.dipesh@gmail.com",
   socials: [
     { label: "GitHub", href: "https://github.com/dipace777" },
