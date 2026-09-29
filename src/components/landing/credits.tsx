@@ -9,7 +9,7 @@ const credits = [
   ["Dialogue by", "AI SDK"],
   ["Routing by", "TanStack Start"],
   ["Stunts by", "Go & Elixir"],
-  ["Filmed on location", "The Internet"],
+  ["Filmed on location", "Kathmandu, Nepal"],
 ] as const
 
 export function Credits() {
