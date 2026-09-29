@@ -29,7 +29,23 @@ export const pageHead = ({
       ...(published
         ? [{ property: "article:published_time", content: published }]
         : []),
-      ...tags.map((t) => ({ property: "article:tag", content: t })),
+      ...(tags.length ? [{ name: "keywords", content: tags.join(", ") }] : []),
+      ...(type === "article"
+        ? [
+            {
+              "script:ld+json": {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                headline: title,
+                description,
+                url,
+                datePublished: published,
+                keywords: tags,
+                author: { "@type": "Person", name: site.name, url: site.url },
+              },
+            },
+          ]
+        : []),
     ],
     links: [{ rel: "canonical", href: url }],
   }

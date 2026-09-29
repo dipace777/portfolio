@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ApiGenuiRouteImport } from './routes/api/genui'
 import { Route as JournalIndexRouteImport } from './routes/journal/index'
 import { Route as JournalDurableAgentsWithEffectRouteImport } from './routes/journal/durable-agents-with-effect'
+import { Route as JournalStreamingGenerativeUiOnTanstackStartRouteImport } from './routes/journal/streaming-generative-ui-on-tanstack-start'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,6 +32,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGenuiRoute = ApiGenuiRouteImport.update({
+  id: '/api/genui',
+  path: '/api/genui',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalIndexRoute = JournalIndexRouteImport.update({
   id: '/journal/',
   path: '/journal/',
@@ -41,19 +48,29 @@ const JournalDurableAgentsWithEffectRoute =
     path: '/journal/durable-agents-with-effect',
     getParentRoute: () => rootRouteImport,
   } as any)
+const JournalStreamingGenerativeUiOnTanstackStartRoute =
+  JournalStreamingGenerativeUiOnTanstackStartRouteImport.update({
+    id: '/journal/streaming-generative-ui-on-tanstack-start',
+    path: '/journal/streaming-generative-ui-on-tanstack-start',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/genui': typeof ApiGenuiRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
+  '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/genui': typeof ApiGenuiRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
+  '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   '/journal': typeof JournalIndexRoute
 }
 export interface FileRoutesById {
@@ -61,7 +78,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/genui': typeof ApiGenuiRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
+  '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   '/journal/': typeof JournalIndexRoute
 }
 export interface FileRouteTypes {
@@ -70,21 +89,27 @@ export interface FileRouteTypes {
     | '/'
     | '/rss.xml'
     | '/sitemap.xml'
+    | '/api/genui'
     | '/journal/durable-agents-with-effect'
+    | '/journal/streaming-generative-ui-on-tanstack-start'
     | '/journal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/rss.xml'
     | '/sitemap.xml'
+    | '/api/genui'
     | '/journal/durable-agents-with-effect'
+    | '/journal/streaming-generative-ui-on-tanstack-start'
     | '/journal'
   id:
     | '__root__'
     | '/'
     | '/rss.xml'
     | '/sitemap.xml'
+    | '/api/genui'
     | '/journal/durable-agents-with-effect'
+    | '/journal/streaming-generative-ui-on-tanstack-start'
     | '/journal/'
   fileRoutesById: FileRoutesById
 }
@@ -92,7 +117,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiGenuiRoute: typeof ApiGenuiRoute
   JournalDurableAgentsWithEffectRoute: typeof JournalDurableAgentsWithEffectRoute
+  JournalStreamingGenerativeUiOnTanstackStartRoute: typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   JournalIndexRoute: typeof JournalIndexRoute
 }
 
@@ -119,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/genui': {
+      id: '/api/genui'
+      path: '/api/genui'
+      fullPath: '/api/genui'
+      preLoaderRoute: typeof ApiGenuiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal/': {
       id: '/journal/'
       path: '/journal'
@@ -133,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JournalDurableAgentsWithEffectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal/streaming-generative-ui-on-tanstack-start': {
+      id: '/journal/streaming-generative-ui-on-tanstack-start'
+      path: '/journal/streaming-generative-ui-on-tanstack-start'
+      fullPath: '/journal/streaming-generative-ui-on-tanstack-start'
+      preLoaderRoute: typeof JournalStreamingGenerativeUiOnTanstackStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -140,7 +181,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiGenuiRoute: ApiGenuiRoute,
   JournalDurableAgentsWithEffectRoute: JournalDurableAgentsWithEffectRoute,
+  JournalStreamingGenerativeUiOnTanstackStartRoute:
+    JournalStreamingGenerativeUiOnTanstackStartRoute,
   JournalIndexRoute: JournalIndexRoute,
 }
 export const routeTree = rootRouteImport

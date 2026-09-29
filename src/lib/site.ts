@@ -196,6 +196,9 @@ export const essays: ReadonlyArray<Essay> = [
     kicker:
       "Server functions, AI SDK streams and components that render while the model thinks.",
     tags: ["AI SDK", "TanStack"],
+    to: "/journal/streaming-generative-ui-on-tanstack-start",
+    published: "2026-09-30",
+    minutes: 11,
   },
   {
     no: "E.03",
