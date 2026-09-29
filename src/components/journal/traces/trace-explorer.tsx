@@ -25,7 +25,9 @@ const flatten = (spans: ReadonlyArray<WireSpan>): Array<Row> => {
   }
   const out: Array<Row> = []
   const walk = (parent: string | null, depth: number) => {
-    for (const s of (children.get(parent) ?? []).sort((a, b) => a.start - b.start)) {
+    for (const s of (children.get(parent) ?? []).sort(
+      (a, b) => a.start - b.start
+    )) {
       out.push({ ...s, depth })
       walk(s.id, depth + 1)
     }
@@ -49,10 +51,15 @@ const colorOf = (s: WireSpan) => {
   return "bg-bone/20"
 }
 
-const fmtMs = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(2)}s` : `${Math.round(v)}ms`)
+const fmtMs = (v: number) =>
+  v >= 1000 ? `${(v / 1000).toFixed(2)}s` : `${Math.round(v)}ms`
 
 const fmtValue = (v: unknown) =>
-  Array.isArray(v) ? v.join(", ") : typeof v === "number" ? String(v) : String(v)
+  Array.isArray(v)
+    ? v.join(", ")
+    : typeof v === "number"
+      ? String(v)
+      : String(v)
 
 export function TraceExplorer() {
   const [scenario, setScenario] = useState<Scenario>("healthy")
@@ -75,8 +82,12 @@ export function TraceExplorer() {
       setTrace(data)
       const flagged =
         data.spans.find((s) => s.status.code === 2) ??
-        data.spans.find((s) => s.attributes["gen_ai.evaluation.score.label"] === "fail") ??
-        data.spans.find((s) => s.events.some((e) => e.name === "budget.exceeded")) ??
+        data.spans.find(
+          (s) => s.attributes["gen_ai.evaluation.score.label"] === "fail"
+        ) ??
+        data.spans.find((s) =>
+          s.events.some((e) => e.name === "budget.exceeded")
+        ) ??
         data.spans.find((s) => s.attributes["gen_ai.operation.name"] === "chat")
       setSelected(flagged?.id ?? null)
     } finally {
@@ -103,7 +114,11 @@ export function TraceExplorer() {
   ]
 
   return (
-    <Demo label="Fig. 01" title="One request, every span" hint="Real OpenTelemetry spans">
+    <Demo
+      label="Fig. 01"
+      title="One request, every span"
+      hint="Real OpenTelemetry spans"
+    >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <Segmented
           label="Scenario"
@@ -115,7 +130,8 @@ export function TraceExplorer() {
           }}
         />
         <ActionButton onClick={() => void run()} disabled={running}>
-          <Play className="size-3.5" /> {running ? "Tracing…" : trace ? "Run again" : "Run request"}
+          <Play className="size-3.5" />{" "}
+          {running ? "Tracing…" : trace ? "Run again" : "Run request"}
         </ActionButton>
       </div>
 
@@ -123,7 +139,9 @@ export function TraceExplorer() {
         <dl className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-bone/10 bg-bone/10 sm:grid-cols-4 lg:grid-cols-7">
           {summary.map(([k, v]) => (
             <div key={k} className="bg-[#0a0b0d] px-3 py-2">
-              <dt className="font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">{k}</dt>
+              <dt className="font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">
+                {k}
+              </dt>
               <dd
                 className={`mt-0.5 truncate font-mono text-xs tabular-nums ${
                   (k === "Failed spans" && v !== "0") ||
@@ -144,7 +162,9 @@ export function TraceExplorer() {
       >
         {rows.length === 0 ? (
           <p className="px-4 py-16 text-center font-mono text-[11px] text-bone/35">
-            {running ? "Running the pipeline on the server…" : "Run a request to capture its trace."}
+            {running
+              ? "Running the pipeline on the server…"
+              : "Run a request to capture its trace."}
           </p>
         ) : (
           <ul className="py-1.5" role="listbox" aria-label="Spans">
@@ -154,7 +174,9 @@ export function TraceExplorer() {
                   type="button"
                   onClick={() => setSelected(r.id)}
                   className={`grid w-full grid-cols-[minmax(0,11rem)_minmax(0,1fr)_3.5rem] items-center gap-3 px-3 py-1 text-left sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_4rem] ${
-                    r.id === active?.id ? "bg-bone/[0.06]" : "hover:bg-bone/[0.03]"
+                    r.id === active?.id
+                      ? "bg-bone/[0.06]"
+                      : "hover:bg-bone/[0.03]"
                   }`}
                 >
                   <span
@@ -168,7 +190,11 @@ export function TraceExplorer() {
                       key={`${trace?.traceId}-${r.id}`}
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.45, delay: i * 0.025, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{
+                        duration: 0.45,
+                        delay: i * 0.025,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
                       className={`absolute top-0.5 h-2.5 origin-left rounded-sm ${colorOf(r)}`}
                       style={{
                         left: `${(r.start / total) * 100}%`,
@@ -202,8 +228,15 @@ export function TraceExplorer() {
             </p>
             <dl className="mt-2 space-y-1 font-mono text-[11px]">
               {Object.entries(active.attributes).map(([k, v]) => (
-                <div key={k} className="grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-3">
-                  <dt className={`truncate ${k.startsWith("gen_ai.") ? "text-ember/80" : "text-bone/45"}`}>{k}</dt>
+                <div
+                  key={k}
+                  className="grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-3"
+                >
+                  <dt
+                    className={`truncate ${k.startsWith("gen_ai.") ? "text-ember/80" : "text-bone/45"}`}
+                  >
+                    {k}
+                  </dt>
                   <dd className="truncate text-bone/80">{fmtValue(v)}</dd>
                 </div>
               ))}
@@ -216,15 +249,23 @@ export function TraceExplorer() {
             <p
               className={`mt-2 font-mono text-[11px] ${active.status.code === 2 ? "text-[#ff8f84]" : "text-bone/60"}`}
             >
-              {active.status.code === 2 ? `ERROR · ${active.status.message ?? ""}` : "UNSET · ok"}
+              {active.status.code === 2
+                ? `ERROR · ${active.status.message ?? ""}`
+                : "UNSET · ok"}
             </p>
             {active.events.length === 0 ? (
-              <p className="mt-2 font-mono text-[11px] text-bone/30">No events</p>
+              <p className="mt-2 font-mono text-[11px] text-bone/30">
+                No events
+              </p>
             ) : (
               active.events.map((e) => (
-                <div key={`${e.name}-${e.at}`} className="mt-2 rounded-md bg-bone/[0.04] p-2 font-mono text-[11px]">
+                <div
+                  key={`${e.name}-${e.at}`}
+                  className="mt-2 rounded-md bg-bone/[0.04] p-2 font-mono text-[11px]"
+                >
                   <p className="text-bone/80">
-                    {e.name} <span className="text-bone/35">@ {fmtMs(e.at)}</span>
+                    {e.name}{" "}
+                    <span className="text-bone/35">@ {fmtMs(e.at)}</span>
                   </p>
                   {Object.entries(e.attributes).map(([k, v]) => (
                     <p key={k} className="mt-0.5 break-words text-bone/45">

@@ -18,7 +18,12 @@ type Sample = {
   dropped: number
 }
 
-const simulate = (topK: number, turns: number, budget: number, trim: boolean) => {
+const simulate = (
+  topK: number,
+  turns: number,
+  budget: number,
+  trim: boolean
+) => {
   const rand = mulberry32(11)
   return Array.from({ length: N }, (): Sample => {
     let history = 0
@@ -65,7 +70,10 @@ export function BudgetLab() {
   const [budget, setBudget] = useState(8000)
   const [trim, setTrim] = useState(false)
 
-  const samples = useMemo(() => simulate(topK, turns, budget, trim), [topK, turns, budget, trim])
+  const samples = useMemo(
+    () => simulate(topK, turns, budget, trim),
+    [topK, turns, budget, trim]
+  )
   const inputs = samples.map(inputOf).sort((a, b) => a - b)
   const over = inputs.filter((v) => v > budget).length / N
   const cost =
@@ -73,22 +81,55 @@ export function BudgetLab() {
   const dropped = samples.reduce((n, s) => n + s.dropped, 0) / N
 
   const bins = Array.from({ length: BINS }, () => 0)
-  for (const v of inputs) bins[Math.min(BINS - 1, Math.floor((v / MAX) * BINS))]++
+  for (const v of inputs)
+    bins[Math.min(BINS - 1, Math.floor((v / MAX) * BINS))]++
   const peak = Math.max(...bins)
 
   const avg = Object.fromEntries(
-    parts.map((p) => [p.key, samples.reduce((n, s) => n + s[p.key], 0) / N]),
+    parts.map((p) => [p.key, samples.reduce((n, s) => n + s[p.key], 0) / N])
   ) as Record<(typeof parts)[number]["key"], number>
   const avgTotal = parts.reduce((n, p) => n + avg[p.key], 0)
 
   return (
-    <Demo label="Fig. 02" title="Where the tokens go" hint="400 simulated requests">
+    <Demo
+      label="Fig. 02"
+      title="Where the tokens go"
+      hint="400 simulated requests"
+    >
       <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
-        <Slider label="Retrieved chunks (top-k)" value={topK} min={1} max={32} step={1} format={(v) => String(v)} onChange={setTopK} />
-        <Slider label="Max history turns kept" value={turns} min={0} max={30} step={1} format={(v) => String(v)} onChange={setTurns} />
-        <Slider label="Input token budget" value={budget} min={2000} max={32000} step={1000} format={k} onChange={setBudget} />
+        <Slider
+          label="Retrieved chunks (top-k)"
+          value={topK}
+          min={1}
+          max={32}
+          step={1}
+          format={(v) => String(v)}
+          onChange={setTopK}
+        />
+        <Slider
+          label="Max history turns kept"
+          value={turns}
+          min={0}
+          max={30}
+          step={1}
+          format={(v) => String(v)}
+          onChange={setTurns}
+        />
+        <Slider
+          label="Input token budget"
+          value={budget}
+          min={2000}
+          max={32000}
+          step={1000}
+          format={k}
+          onChange={setBudget}
+        />
         <div className="flex items-end">
-          <Toggle label="Trim retrieval to fit the budget" checked={trim} onChange={setTrim} />
+          <Toggle
+            label="Trim retrieval to fit the budget"
+            checked={trim}
+            onChange={setTrim}
+          />
         </div>
       </div>
 
@@ -98,7 +139,9 @@ export function BudgetLab() {
             <div
               key={i}
               className={`flex-1 rounded-t-[2px] transition-[height] duration-300 ${
-                (i + 1) * (MAX / BINS) > budget ? "bg-[#ff5d4d]/70" : "bg-ember/70"
+                (i + 1) * (MAX / BINS) > budget
+                  ? "bg-[#ff5d4d]/70"
+                  : "bg-ember/70"
               }`}
               style={{ height: `${peak ? (b / peak) * 100 : 0}%` }}
             />
@@ -147,8 +190,14 @@ export function BudgetLab() {
           ["Per 1k requests", `$${cost.toFixed(2)}`, false],
         ].map(([label, v, bad]) => (
           <div key={String(label)} className="bg-[#0a0b0d] px-3 py-2">
-            <dt className="font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">{label}</dt>
-            <dd className={`mt-0.5 font-mono text-sm tabular-nums ${bad ? "text-[#ff8f84]" : "text-bone/85"}`}>{v}</dd>
+            <dt className="font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">
+              {label}
+            </dt>
+            <dd
+              className={`mt-0.5 font-mono text-sm tabular-nums ${bad ? "text-[#ff8f84]" : "text-bone/85"}`}
+            >
+              {v}
+            </dd>
           </div>
         ))}
       </dl>

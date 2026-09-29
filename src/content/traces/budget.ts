@@ -13,7 +13,11 @@ const tokenUsage = meter.createHistogram("gen_ai.client.token.usage", {
 
 export const withinBudget = (
   chunks: ReadonlyArray<Chunk>,
-  { budget, reserved, route }: { budget: number; reserved: number; route: string },
+  {
+    budget,
+    reserved,
+    route,
+  }: { budget: number; reserved: number; route: string }
 ) => {
   const fit = fitToBudget(chunks, { budget, reserved })
   const span = trace.getActiveSpan()

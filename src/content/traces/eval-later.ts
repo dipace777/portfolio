@@ -7,7 +7,7 @@ const tracer = trace.getTracer("support-bot.evals")
 export const scoreLater = (
   answer: string,
   sources: number,
-  origin: SpanContext,
+  origin: SpanContext
 ) =>
   tracer.startActiveSpan(
     "evaluate groundedness",
@@ -22,5 +22,5 @@ export const scoreLater = (
       })
       span.end()
       return g
-    },
+    }
   )

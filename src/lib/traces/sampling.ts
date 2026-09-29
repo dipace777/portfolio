@@ -40,9 +40,7 @@ export const syntheticTraces = (n: number, seed = 7): Array<TraceSummary> => {
     const ungrounded = r >= 0.035 && r < 0.05
     return {
       traceId: hex(rand, 32),
-      durationMs: Math.round(
-        (slow ? 6200 : 1100) * (0.7 + rand() * 0.6),
-      ),
+      durationMs: Math.round((slow ? 6200 : 1100) * (0.7 + rand() * 0.6)),
       error,
       tokens: Math.round((bloated ? 14500 : 3500) * (0.85 + rand() * 0.3)),
       groundedness: ungrounded

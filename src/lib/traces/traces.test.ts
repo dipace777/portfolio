@@ -10,8 +10,9 @@ import {
 } from "./sampling"
 import type { TailPolicy } from "./sampling"
 
-const byName = (spans: Awaited<ReturnType<typeof runPipeline>>["spans"]) =>
-  (name: string) => spans.filter((s) => s.name.startsWith(name))
+const byName =
+  (spans: Awaited<ReturnType<typeof runPipeline>>["spans"]) => (name: string) =>
+    spans.filter((s) => s.name.startsWith(name))
 
 describe("pipeline traces", () => {
   it("nests AI SDK spans under the request span in one trace", async () => {
@@ -25,7 +26,11 @@ describe("pipeline traces", () => {
     expect(find("chat")).toHaveLength(2)
     expect(find("execute_tool lookupOrder")[0].status.code).toBe(0)
     expect(find("embeddings").length).toBeGreaterThan(0)
-    expect(spans.every((s) => s.parent === null || spans.some((p) => p.id === s.parent))).toBe(true)
+    expect(
+      spans.every(
+        (s) => s.parent === null || spans.some((p) => p.id === s.parent)
+      )
+    ).toBe(true)
   })
 
   it("records a failed tool while the request still returns 200", async () => {
@@ -45,7 +50,9 @@ describe("pipeline traces", () => {
     expect(root?.events.map((e) => e.name)).toContain("budget.exceeded")
 
     const ungrounded = await runPipeline("ungrounded")
-    const evalSpan = ungrounded.spans.find((s) => s.name === "evaluate groundedness")
+    const evalSpan = ungrounded.spans.find(
+      (s) => s.name === "evaluate groundedness"
+    )
     expect(evalSpan?.attributes["gen_ai.evaluation.score.label"]).toBe("fail")
   })
 })
@@ -53,7 +60,10 @@ describe("pipeline traces", () => {
 describe("groundedness", () => {
   it("scores the share of sentences citing a real source", () => {
     expect(groundedness("A [1]. B [2].", 2).score).toBe(1)
-    expect(groundedness("A [1]. B.", 2)).toMatchObject({ score: 0.5, label: "fail" })
+    expect(groundedness("A [1]. B.", 2)).toMatchObject({
+      score: 0.5,
+      label: "fail",
+    })
     expect(groundedness("A [9].", 2).score).toBe(0)
   })
 })
@@ -86,7 +96,9 @@ describe("sampling", () => {
     const kept = traces.filter((t) => headSampled(t.traceId, 0.1)).length
     expect(kept / traces.length).toBeGreaterThan(0.08)
     expect(kept / traces.length).toBeLessThan(0.12)
-    expect(headSampled(traces[0].traceId, 0.1)).toBe(headSampled(traces[0].traceId, 0.1))
+    expect(headSampled(traces[0].traceId, 0.1)).toBe(
+      headSampled(traces[0].traceId, 0.1)
+    )
   })
 
   it("tail sampling keeps every interesting trace", () => {

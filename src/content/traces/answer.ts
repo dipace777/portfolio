@@ -12,7 +12,10 @@ const tracer = trace.getTracer("support-bot")
 export const answer = (question: string) =>
   tracer.startActiveSpan(
     "answer",
-    { kind: SpanKind.INTERNAL, attributes: { "app.prompt.version": "support-v7" } },
+    {
+      kind: SpanKind.INTERNAL,
+      attributes: { "app.prompt.version": "support-v7" },
+    },
     async (span) => {
       try {
         const docs = await tracer.startActiveSpan("retrieve", async (s) => {
@@ -41,5 +44,5 @@ export const answer = (question: string) =>
       } finally {
         span.end()
       }
-    },
+    }
   )

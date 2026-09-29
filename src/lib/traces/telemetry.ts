@@ -14,7 +14,11 @@ export type WireSpan = {
   duration: number
   status: { code: number; message?: string }
   attributes: Record<string, unknown>
-  events: Array<{ name: string; at: number; attributes: Record<string, unknown> }>
+  events: Array<{
+    name: string
+    at: number
+    attributes: Record<string, unknown>
+  }>
 }
 
 export type WireTrace = { traceId: string; spans: Array<WireSpan> }
@@ -50,7 +54,8 @@ class TraceCollector implements SpanProcessor {
           status: { code: s.status.code, message: s.status.message },
           attributes: { ...s.attributes },
           events: s.events.map((e) => {
-            const { "exception.stacktrace": _, ...attributes } = e.attributes ?? {}
+            const { "exception.stacktrace": _, ...attributes } =
+              e.attributes ?? {}
             return { name: e.name, at: ms(e.time) - t0, attributes }
           }),
         }))

@@ -35,7 +35,10 @@ export const scriptedChat = (script: ModelScript): LanguageModelV4 => ({
   doGenerate: async ({ prompt, abortSignal }) => {
     const last = prompt.at(-1)
     const firstStep = last?.role !== "tool"
-    await sleep(firstStep ? script.latencyMs : script.latencyMs * 0.6, abortSignal)
+    await sleep(
+      firstStep ? script.latencyMs : script.latencyMs * 0.6,
+      abortSignal
+    )
     if (firstStep && script.callTool) {
       return {
         content: [
@@ -56,7 +59,7 @@ export const scriptedChat = (script: ModelScript): LanguageModelV4 => ({
       finishReason: { unified: "stop", raw: "end_turn" },
       usage: usage(
         firstStep ? script.inputTokens : script.inputTokens + 180,
-        script.outputTokens,
+        script.outputTokens
       ),
       warnings: [],
     }
@@ -76,9 +79,11 @@ export const scriptedEmbedder: EmbeddingModelV4 = {
     await sleep(70, abortSignal)
     return {
       embeddings: values.map((v) =>
-        Array.from({ length: 8 }, (_, i) => Math.sin(v.length * (i + 1))),
+        Array.from({ length: 8 }, (_, i) => Math.sin(v.length * (i + 1)))
       ),
-      usage: { tokens: values.reduce((n, v) => n + Math.ceil(v.length / 4), 0) },
+      usage: {
+        tokens: values.reduce((n, v) => n + Math.ceil(v.length / 4), 0),
+      },
       warnings: [],
     }
   },

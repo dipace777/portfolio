@@ -30,7 +30,9 @@ const simulate = (canary: number) => {
 const series = (points: ReadonlyArray<Point>, filter: (p: Point) => boolean) =>
   Array.from({ length: BUCKETS }, (_, b) => {
     const xs = points.filter((p) => p.bucket === b && filter(p))
-    return xs.length >= 3 ? xs.reduce((n, p) => n + p.score, 0) / xs.length : null
+    return xs.length >= 3
+      ? xs.reduce((n, p) => n + p.score, 0) / xs.length
+      : null
   })
 
 const x = (b: number) => (b / (BUCKETS - 1)) * W
@@ -57,8 +59,16 @@ export function EvalDrift() {
   const points = useMemo(() => simulate(canary), [canary])
   const lines = grouped
     ? [
-        { id: "v7", color: "#f2ede4", data: series(points, (p) => p.version === "v7") },
-        { id: "v8", color: "#ff9a3c", data: series(points, (p) => p.version === "v8") },
+        {
+          id: "v7",
+          color: "#f2ede4",
+          data: series(points, (p) => p.version === "v7"),
+        },
+        {
+          id: "v8",
+          color: "#ff9a3c",
+          data: series(points, (p) => p.version === "v8"),
+        },
       ]
     : [{ id: "all", color: "#f2ede4", data: series(points, () => true) }]
 
@@ -68,7 +78,11 @@ export function EvalDrift() {
     .sort((a, b) => a.b - b.b)[0] as { b: number; id: string } | undefined
 
   return (
-    <Demo label="Fig. 04" title="A regression hiding in the average" hint="Groundedness, 24h, simulated">
+    <Demo
+      label="Fig. 04"
+      title="A regression hiding in the average"
+      hint="Groundedness, 24h, simulated"
+    >
       <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
         <Slider
           label="support-v8 canary share (from 14:00)"
@@ -80,30 +94,84 @@ export function EvalDrift() {
           onChange={setCanary}
         />
         <div className="flex items-end">
-          <Toggle label="Group by app.prompt.version" checked={grouped} onChange={setGrouped} />
+          <Toggle
+            label="Group by app.prompt.version"
+            checked={grouped}
+            onChange={setGrouped}
+          />
         </div>
       </div>
 
-      <svg viewBox={`-8 -8 ${W + 16} ${H + 24}`} className="mt-6 h-auto w-full overflow-visible" role="img" aria-label="Groundedness over time">
+      <svg
+        viewBox={`-8 -8 ${W + 16} ${H + 24}`}
+        className="mt-6 h-auto w-full overflow-visible"
+        role="img"
+        aria-label="Groundedness over time"
+      >
         {[0.6, 0.7, 0.9, 1].map((v) => (
-          <line key={v} x1={0} x2={W} y1={y(v)} y2={y(v)} stroke="#f2ede4" strokeOpacity={0.06} />
+          <line
+            key={v}
+            x1={0}
+            x2={W}
+            y1={y(v)}
+            y2={y(v)}
+            stroke="#f2ede4"
+            strokeOpacity={0.06}
+          />
         ))}
-        <line x1={0} x2={W} y1={y(THRESHOLD)} y2={y(THRESHOLD)} stroke="#ff5d4d" strokeOpacity={0.6} strokeDasharray="4 4" />
-        <text x={W} y={y(THRESHOLD) - 5} textAnchor="end" className="fill-[#ff8f84] font-mono text-[9px]">
+        <line
+          x1={0}
+          x2={W}
+          y1={y(THRESHOLD)}
+          y2={y(THRESHOLD)}
+          stroke="#ff5d4d"
+          strokeOpacity={0.6}
+          strokeDasharray="4 4"
+        />
+        <text
+          x={W}
+          y={y(THRESHOLD) - 5}
+          textAnchor="end"
+          className="fill-[#ff8f84] font-mono text-[9px]"
+        >
           alert &lt; {THRESHOLD}
         </text>
-        <line x1={x(DEPLOY)} x2={x(DEPLOY)} y1={0} y2={H} stroke="#ff9a3c" strokeOpacity={0.4} />
-        <text x={x(DEPLOY) + 4} y={10} className="fill-ember font-mono text-[9px]">
+        <line
+          x1={x(DEPLOY)}
+          x2={x(DEPLOY)}
+          y1={0}
+          y2={H}
+          stroke="#ff9a3c"
+          strokeOpacity={0.4}
+        />
+        <text
+          x={x(DEPLOY) + 4}
+          y={10}
+          className="fill-ember font-mono text-[9px]"
+        >
           deploy support-v8
         </text>
         {lines.map((l) => (
-          <path key={l.id} d={path(l.data)} fill="none" stroke={l.color} strokeWidth={1.5} strokeOpacity={0.85} />
+          <path
+            key={l.id}
+            d={path(l.data)}
+            fill="none"
+            stroke={l.color}
+            strokeWidth={1.5}
+            strokeOpacity={0.85}
+          />
         ))}
         {firstAlert && (
           <circle cx={x(firstAlert.b)} cy={y(THRESHOLD)} r={4} fill="#ff5d4d" />
         )}
         {[0, 24, 48, 72, 95].map((b) => (
-          <text key={b} x={x(b)} y={H + 16} textAnchor="middle" className="fill-bone/30 font-mono text-[9px]">
+          <text
+            key={b}
+            x={x(b)}
+            y={H + 16}
+            textAnchor="middle"
+            className="fill-bone/30 font-mono text-[9px]"
+          >
             {clock(b)}
           </text>
         ))}

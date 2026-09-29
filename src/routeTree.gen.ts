@@ -16,6 +16,7 @@ import { Route as ApiGenuiRouteImport } from './routes/api/genui'
 import { Route as ApiTraceRouteImport } from './routes/api/trace'
 import { Route as JournalIndexRouteImport } from './routes/journal/index'
 import { Route as JournalDurableAgentsWithEffectRouteImport } from './routes/journal/durable-agents-with-effect'
+import { Route as JournalLetItCrashRouteImport } from './routes/journal/let-it-crash'
 import { Route as JournalStreamingGenerativeUiOnTanstackStartRouteImport } from './routes/journal/streaming-generative-ui-on-tanstack-start'
 import { Route as JournalTracesNotVibesRouteImport } from './routes/journal/traces-not-vibes'
 
@@ -55,6 +56,11 @@ const JournalDurableAgentsWithEffectRoute =
     path: '/journal/durable-agents-with-effect',
     getParentRoute: () => rootRouteImport,
   } as any)
+const JournalLetItCrashRoute = JournalLetItCrashRouteImport.update({
+  id: '/journal/let-it-crash',
+  path: '/journal/let-it-crash',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalStreamingGenerativeUiOnTanstackStartRoute =
   JournalStreamingGenerativeUiOnTanstackStartRouteImport.update({
     id: '/journal/streaming-generative-ui-on-tanstack-start',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/api/genui': typeof ApiGenuiRoute
   '/api/trace': typeof ApiTraceRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
+  '/journal/let-it-crash': typeof JournalLetItCrashRoute
   '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   '/journal/traces-not-vibes': typeof JournalTracesNotVibesRoute
   '/journal/': typeof JournalIndexRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/api/genui': typeof ApiGenuiRoute
   '/api/trace': typeof ApiTraceRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
+  '/journal/let-it-crash': typeof JournalLetItCrashRoute
   '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   '/journal/traces-not-vibes': typeof JournalTracesNotVibesRoute
   '/journal': typeof JournalIndexRoute
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/api/genui': typeof ApiGenuiRoute
   '/api/trace': typeof ApiTraceRoute
   '/journal/durable-agents-with-effect': typeof JournalDurableAgentsWithEffectRoute
+  '/journal/let-it-crash': typeof JournalLetItCrashRoute
   '/journal/streaming-generative-ui-on-tanstack-start': typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   '/journal/traces-not-vibes': typeof JournalTracesNotVibesRoute
   '/journal/': typeof JournalIndexRoute
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/api/genui'
     | '/api/trace'
     | '/journal/durable-agents-with-effect'
+    | '/journal/let-it-crash'
     | '/journal/streaming-generative-ui-on-tanstack-start'
     | '/journal/traces-not-vibes'
     | '/journal/'
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/api/genui'
     | '/api/trace'
     | '/journal/durable-agents-with-effect'
+    | '/journal/let-it-crash'
     | '/journal/streaming-generative-ui-on-tanstack-start'
     | '/journal/traces-not-vibes'
     | '/journal'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/api/genui'
     | '/api/trace'
     | '/journal/durable-agents-with-effect'
+    | '/journal/let-it-crash'
     | '/journal/streaming-generative-ui-on-tanstack-start'
     | '/journal/traces-not-vibes'
     | '/journal/'
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   ApiGenuiRoute: typeof ApiGenuiRoute
   ApiTraceRoute: typeof ApiTraceRoute
   JournalDurableAgentsWithEffectRoute: typeof JournalDurableAgentsWithEffectRoute
+  JournalLetItCrashRoute: typeof JournalLetItCrashRoute
   JournalStreamingGenerativeUiOnTanstackStartRoute: typeof JournalStreamingGenerativeUiOnTanstackStartRoute
   JournalTracesNotVibesRoute: typeof JournalTracesNotVibesRoute
   JournalIndexRoute: typeof JournalIndexRoute
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JournalDurableAgentsWithEffectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal/let-it-crash': {
+      id: '/journal/let-it-crash'
+      path: '/journal/let-it-crash'
+      fullPath: '/journal/let-it-crash'
+      preLoaderRoute: typeof JournalLetItCrashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal/streaming-generative-ui-on-tanstack-start': {
       id: '/journal/streaming-generative-ui-on-tanstack-start'
       path: '/journal/streaming-generative-ui-on-tanstack-start'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiGenuiRoute: ApiGenuiRoute,
   ApiTraceRoute: ApiTraceRoute,
   JournalDurableAgentsWithEffectRoute: JournalDurableAgentsWithEffectRoute,
+  JournalLetItCrashRoute: JournalLetItCrashRoute,
   JournalStreamingGenerativeUiOnTanstackStartRoute:
     JournalStreamingGenerativeUiOnTanstackStartRoute,
   JournalTracesNotVibesRoute: JournalTracesNotVibesRoute,

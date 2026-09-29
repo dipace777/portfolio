@@ -19,7 +19,7 @@ const provider = new BasicTracerProvider({
   }),
   spanProcessors: [
     new BatchSpanProcessor(
-      new OTLPTraceExporter({ url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT }),
+      new OTLPTraceExporter({ url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT })
     ),
   ],
 })

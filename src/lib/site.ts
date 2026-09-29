@@ -216,6 +216,9 @@ export const essays: ReadonlyArray<Essay> = [
     kicker:
       "Supervision trees as a mental model for fault-tolerant, multi-agent systems.",
     tags: ["Elixir", "Architecture"],
+    to: "/journal/let-it-crash",
+    published: "2026-09-30",
+    minutes: 12,
   },
 ]
 

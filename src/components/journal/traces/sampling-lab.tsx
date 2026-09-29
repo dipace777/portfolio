@@ -31,7 +31,12 @@ const kinds = [
 export function SamplingLab() {
   const [mode, setMode] = useState<"head" | "tail">("head")
   const [ratio, setRatio] = useState(0.1)
-  const [rules, setRules] = useState({ error: true, slow: true, budget: true, ungrounded: true })
+  const [rules, setRules] = useState({
+    error: true,
+    slow: true,
+    budget: true,
+    ungrounded: true,
+  })
 
   const kept = useMemo(() => {
     const policy: TailPolicy = {
@@ -42,7 +47,7 @@ export function SamplingLab() {
       baseline: ratio,
     }
     return traces.map((t) =>
-      mode === "head" ? headSampled(t.traceId, ratio) : tailSampled(t, policy),
+      mode === "head" ? headSampled(t.traceId, ratio) : tailSampled(t, policy)
     )
   }, [mode, ratio, rules])
 
@@ -59,7 +64,11 @@ export function SamplingLab() {
   })
 
   return (
-    <Demo label="Fig. 03" title="Keep the traces that matter" hint="2,000 traces · real OTel sampler">
+    <Demo
+      label="Fig. 03"
+      title="Keep the traces that matter"
+      hint="2,000 traces · real OTel sampler"
+    >
       <div className="flex flex-wrap items-end justify-between gap-4">
         <Segmented
           label="Strategy"
@@ -123,7 +132,9 @@ export function SamplingLab() {
 
       <dl className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-bone/10 bg-bone/10 sm:grid-cols-5">
         <div className="bg-[#0a0b0d] px-3 py-2">
-          <dt className="font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">Stored</dt>
+          <dt className="font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">
+            Stored
+          </dt>
           <dd className="mt-0.5 font-mono text-sm text-bone/85 tabular-nums">
             {((total / traces.length) * 100).toFixed(1)}%
           </dd>
@@ -131,10 +142,15 @@ export function SamplingLab() {
         {stats.map((s) => (
           <div key={s.kind} className="bg-[#0a0b0d] px-3 py-2">
             <dt className="flex items-center gap-1.5 font-mono text-[9px] tracking-[0.2em] text-bone/35 uppercase">
-              <span className="size-1.5 rounded-full" style={{ background: s.color }} />
+              <span
+                className="size-1.5 rounded-full"
+                style={{ background: s.color }}
+              />
               {s.label}
             </dt>
-            <dd className={`mt-0.5 font-mono text-sm tabular-nums ${s.saved < s.all ? "text-[#ff8f84]" : "text-bone/85"}`}>
+            <dd
+              className={`mt-0.5 font-mono text-sm tabular-nums ${s.saved < s.all ? "text-[#ff8f84]" : "text-bone/85"}`}
+            >
               {s.saved}/{s.all}
             </dd>
           </div>

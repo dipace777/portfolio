@@ -106,7 +106,7 @@ const retrieve = (query: string, topK: number) =>
           db.setAttribute("db.response.returned_rows", rows.length)
           db.end()
           return rows
-        },
+        }
       )
       span.setAttributes({
         "retrieval.top_k": topK,
@@ -230,7 +230,7 @@ export const runPipeline = async (scenario: Scenario) => {
         root.end()
       }
       return id
-    },
+    }
   )
   return collector.take(traceId)
 }

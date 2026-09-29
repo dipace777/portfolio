@@ -4,7 +4,7 @@ export const estimateTokens = (text: string) => Math.ceil(text.length / 4)
 
 export const fitToBudget = (
   chunks: ReadonlyArray<Chunk>,
-  { budget, reserved }: { budget: number; reserved: number },
+  { budget, reserved }: { budget: number; reserved: number }
 ) => {
   const kept: Array<Chunk> = []
   let used = reserved
